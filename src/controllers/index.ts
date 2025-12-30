@@ -1,4 +1,4 @@
-import { sendMessage } from "./chat.controller";
+import { sendMessage, getChatHistory } from "./chat.controller";
 import { healthCheck } from "./health.controller";
 
-export { sendMessage, healthCheck };
+export { sendMessage, getChatHistory, healthCheck };

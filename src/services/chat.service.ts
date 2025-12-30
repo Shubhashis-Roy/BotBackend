@@ -1,4 +1,5 @@
 import { supabase } from "../config/supabase.client";
+import { ChatHistoryMessage } from "../types/chat";
 import { generateReply } from "./llm.service";
 
 export const processChatMessage = async (
@@ -50,4 +51,25 @@ export const processChatMessage = async (
   });
 
   return { conversationId, aiReply };
+};
+
+export const getChatHistoryByConversationId = async (
+  conversationId: string
+): Promise<ChatHistoryMessage[]> => {
+  const { data, error } = await supabase
+    .from("messages")
+    .select("id, sender, text, created_at")
+    .eq("conversation_id", conversationId)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    throw new Error("Failed to fetch chat history");
+  }
+
+  return data.map((msg) => ({
+    id: msg.id,
+    sender: msg.sender,
+    text: msg.text,
+    createdAt: msg.created_at,
+  }));
 };
