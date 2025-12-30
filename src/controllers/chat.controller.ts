@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import { supabase } from "../config/supabase.client";
 import { processChatMessage } from "../services/chat.service";
 
-type Sender = "user" | "ai";
+const MAX_MESSAGE_LENGTH = 1000;
 
 export const sendMessage = async (req: Request, res: Response) => {
   try {
@@ -11,6 +10,12 @@ export const sendMessage = async (req: Request, res: Response) => {
     // Validate input
     if (!message || typeof message !== "string" || !message.trim()) {
       return res.status(400).json({ error: "Message is required" });
+    }
+
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return res.status(400).json({
+        error: "Message is too long. Please keep it under 1000 characters.",
+      });
     }
 
     const { conversationId, aiReply } = await processChatMessage(

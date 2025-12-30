@@ -1,9 +1,11 @@
-import express from "express";
-import routes from "./routes";
+import "./config/env";
 
-export const app = express();
+import { app } from "./app";
+import { checkDbConnection } from "./config/db.health";
 
-// Middlewares
-app.use(express.json());
+const PORT = process.env.PORT || 4000;
 
-app.use("/api", routes);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+checkDbConnection();
