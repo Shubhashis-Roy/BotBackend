@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { sendMessage, testDbConnection } from "../controllers/chat.controller";
+import { sendMessage } from "../controllers";
 
-const router = Router();
+const chatRouter = Router();
 
-router.post("/message", sendMessage);
+chatRouter.post("/message", sendMessage);
 
-router.get("/test-db", testDbConnection);
-
-export default router;
+export default chatRouter;

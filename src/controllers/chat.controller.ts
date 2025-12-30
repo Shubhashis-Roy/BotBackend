@@ -27,16 +27,3 @@ export const sendMessage = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
-export const testDbConnection = async (_req: Request, res: Response) => {
-  const { data, error } = await supabase
-    .from("conversations")
-    .select("*")
-    .limit(1);
-
-  if (error) {
-    return res.status(500).json({ error });
-  }
-
-  return res.json({ success: true, data });
-};
