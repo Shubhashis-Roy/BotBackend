@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
+import "./config/env";
+
 import { app } from "./server";
 import { checkDbConnection } from "./config/db.health";
-
-dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 
